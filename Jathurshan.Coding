@@ -1,0 +1,60 @@
+def calculate_monthly_fees(weekly_fees, pch):
+    return 4 * (weekly_fees + (pch * 500))
+
+
+def calculate_pa(times_participated):
+    return 2500 * times_participated
+
+
+def main():
+    while True:
+        # Collect user inputs
+        name = input("Enter Athlete's Name: ")
+        training_plan = input("Enter Training Plan (Beginner/Intermediate/Elite): ")
+        weight = float(input("Enter Weight (in kg): "))
+        pch = int(input("Enter Private Coaching Hours (PCH): "))
+
+        # Check if weight is valid
+        if weight < 66:
+            print("Error: Invalid weight. You can’t join.")
+            continue
+
+        # Validate PCH hours
+        if pch > 5:
+            print("Not Valid hours")
+            continue
+
+        # Calculate monthly fees
+        weekly_fees = float(input("Enter Weekly Fees: "))
+        monthly_fees = calculate_monthly_fees(weekly_fees, pch)
+
+        # Check if training plan is Intermediate or Elite
+        if training_plan not in ['Intermediate', 'Elite']:
+            print("You can’t participate in the competition")
+            print(f"Monthly Fees: {monthly_fees}")
+        else:
+            # Calculate PA and determine competition participation
+            times_participated = int(input("Enter how many times you have already participated in the competition: "))
+            pa = calculate_pa(times_participated)
+
+            participate = input("Do you want to participate in the competition? (yes/no): ")
+
+            if participate.lower() == "yes":
+                # Check if weight is between 81 and 100
+                if 81 <= weight <= 100:
+                    total_fees = monthly_fees + pa + 2500
+                else:
+                    total_fees = monthly_fees + pa
+            else:
+                total_fees = monthly_fees + pa
+
+            print(f"Total Fees: {total_fees}")
+
+        # Ask if user wants to fill another athlete's details
+        another = input("Do you want to fill another athlete’s details? (yes/no): ")
+        if another.lower() != "yes":
+            break
+
+
+if __name__ == "__main__":
+    main()
